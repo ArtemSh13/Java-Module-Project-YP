@@ -13,27 +13,7 @@ public class Main {
         int numberOfPersons = calculator.enterNumberOfPersons();
 
         // 2. Добавление товаров в калькулятор
-        String userCommand = "Пока не завершили";
-        HashMap<String, Double> goodsAndPrices = new HashMap<>();
-        double total = 0;
-
-        while (!userCommand.equals("завершить")) {
-            System.out.println("Введите название товара и его стоимость в формате:\n<название товара> - <рубли>.<копейки>");
-
-            Scanner scanner = new Scanner(System.in);
-            String userInput = scanner.nextLine();
-
-            String[] goodAndPrice = userInput.split(" - ");
-            double nextPrice = Double.parseDouble(goodAndPrice[1]);
-
-            goodsAndPrices.put(goodAndPrice[0], nextPrice);
-            System.out.println("Товар успешно добавлен");
-
-            total += nextPrice;
-
-            System.out.println("Введите \"завершить\", чтобы закончить ввод. Чтобы добавить ещё товар, введите любые другие символы");
-            userCommand = scanner.nextLine().toLowerCase();
-        }
+        double total = calculator.calculateTotalPrice();
 
         // 3. Вывод результатов
         double totalPerPerson = total / numberOfPersons;
@@ -51,7 +31,7 @@ public class Main {
         }
 
         System.out.println("Добавленные товары:");
-        for (Map.Entry<String, Double> entry : goodsAndPrices.entrySet()) {
+        for (Map.Entry<String, Double> entry : calculator.getGoodsAndPrices().entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue() + " ₽");
         }
         System.out.println("Каждый человек должен заплатить " + String.format("%.2f", totalPerPerson) + " " + rublePostfix);
